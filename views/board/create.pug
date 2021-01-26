@@ -1,0 +1,23 @@
+extends ../layout/layout-default
+block content
+	.wrapper
+		include ../include/title-bar
+		form(action="/board/save" method="post" onsubmit="reyurn onSave(this);")
+			ul.list-wrapper
+					li.list-wrap
+						.title 제목
+						.list
+							input.form-control(type="text" name="title" placeholder="제목")
+					li.list-wrap
+						.title 작성자
+						.list
+							input.form-control(type="text" name="title" placeholder="작성자")
+					li.list-wrap
+						(colspan="2").list
+							textarea(name="content")
+					li.list-wrap
+						.title 첨부파일
+						.list
+							input.form-control(type="file" name="upfile")
+		.text-center.py-4
+			button.btn.btn-primary 저장
