@@ -1,0 +1,29 @@
+ul.pager-wrapper.pagination
+	if pager.firstPage
+		li.page-item
+			a.page-link(href=`/board?page=${pager.firstPage}`)
+				i.fa.fa-srep-backward
+	else
+		li.page-item.disabled
+			a.page-link(href=`#`)
+				i.fa.fa-angle-double-left
+	if
+		li.page-item
+			a.page-link(href=`/board?page=`)
+				i.fa.fa-angle-left
+	else
+	li.page-item
+		a.page-link(href=`/board?page=`) 1
+	li.page-item
+		a.page-link(href=`/board?page=`) 2
+	li.page-item
+		a.page-link(href=`/board?page=`) 3
+	li.page-item
+		a.page-link(href=`/board?page=`)
+			i.fa.fa-angle-right
+	li.page-item
+		a.page-link(href=`/board?page=`)
+			i.fa.fa-angle-double-right
+	li.page-item
+		a.page-link(href=`/board?page=`)
+			i.fa.fa-srep-forward
