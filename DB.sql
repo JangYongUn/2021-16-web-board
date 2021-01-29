@@ -17,6 +17,20 @@
 CREATE DATABASE IF NOT EXISTS `jangyongun` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `jangyongun`;
 
+-- 테이블 jangyongun.auth 구조 내보내기
+CREATE TABLE IF NOT EXISTS `auth` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `userid` varchar(50) NOT NULL,
+  `passwd` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `grade` tinyint unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
 -- 테이블 jangyongun.board 구조 내보내기
 CREATE TABLE IF NOT EXISTS `board` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,

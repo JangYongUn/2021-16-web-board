@@ -11,7 +11,9 @@ a {
 	&:link, &:visited, &:active, &:hover {color: inherit; text-decoration: none;}
 }
 
-
+.thin {font-weight: 300;}
+.nomal {font-weight: 400;}
+.bold {font-weight: 500;}
 
 header {
 	.top-wrapper {

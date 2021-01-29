@@ -1,0 +1,6 @@
+.join-wrapper {
+  max-width: 600px;
+}
+.join-wrapper .join-wrap .list {
+  @incl;
+}
