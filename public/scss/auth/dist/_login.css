@@ -1,0 +1,6 @@
+.login-wrapper {
+  max-width: 400px;
+}
+.login-wrapper .login-wrap {
+  border: 2px solid;
+}

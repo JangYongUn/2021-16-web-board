@@ -1,0 +1,14 @@
+extends ../layout/layout-default
+block content
+  .login-wrapper.wrapper
+		form(name="loginForm" action="/auth/logon" method="post" onsubmit="return onLogin(this)")
+			ul.login-wrap
+				li
+					.title
+					.content
+						input.form-control(type="text" name="userid" placeholder="아이디")
+				li
+					.title
+					.content
+						input.form-control(type="text" name="userid" placeholder="패스워드")
+				.
