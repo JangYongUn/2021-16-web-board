@@ -11,6 +11,8 @@ var path = require('path');
 
 var _require = require('./modules/util'),
     err = _require.err;
+
+var session = require('express-session');
 /************* Server **************/
 
 
@@ -29,6 +31,12 @@ app.locals.pretty = true;
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
+}));
+/************* SESSION **************/
+
+app.set('trust proxy', 1);
+app.use(session({
+  secret: process.env.SESSION_KEY
 }));
 /************* Router **************/
 

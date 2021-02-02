@@ -24,4 +24,17 @@ const err = (code, msg) => {
 	}
 }
 
+const alert = (msg, loc) => {
+	if(loc)
+	return `<script>alert('${msg}'); history.go(-1);</script>`;
+}
+
+const extName = (filename) => {
+	return path.extname(filename).substr(1).toLowerCase();
+}
+
+const srcPath = (filename) => {
+	return `/storages/${filename.substr(0, 9)}/${filename}`;
+}
+
 module.exports = { err }
