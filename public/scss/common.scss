@@ -1,40 +1,111 @@
-@use 'mixin';
+@import './mixin';
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500&display=swap');
 
 html, body {font-family: $notoKr;}
-.wrapper {max-width: 1200px; margin: auto;}
+.wrapper {
+	max-width: 1180px; 
+	margin: auto;
+	@include desktop {
+		width: 96%;
+	}
+}
 
-a {
+a:not(.btn) {
 	&:link, &:visited, &:active, &:hover {color: inherit; text-decoration: none;}
 }
 
 .thin {font-weight: 300;}
-.nomal {font-weight: 400;}
+.normal {font-weight: 400;}
 .bold {font-weight: 500;}
+
+.xs {font-size: 0.75em;}
+.sm {font-size: 0.875em;}
+.md {font-size: 1em;}
+.lg {font-size: 1.125em;}
+.xl {font-size: 1.25em;}
+
+.pagination {
+	margin: 3em 0 2em 0;
+	.page-item.active {
+		.page-link {
+			background-color: $pagerActive;
+			border-color: $pagerActive;
+		}
+	}
+}
 
 header {
 	.top-wrapper {
-		font-size: ;
-		background-color: $colorDark;
-		color: $colorWhight;
-		.wrapper{
-			display: flex;
-			justify-content: flex-end;
-			a {padding: 0.75em 1.5em;}
+		font-size: $xs;
+		background-color: $colorDarker;
+		color: $colorWhite;
+		padding-right: 2em;
+		@include tablet {
+			padding-right: 0;
 		}
-	}
-	.header-wrapper {
 		.wrapper {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 0.5em 0;
-			.logo-wraqpper {
-				
+			@include flex($FE, $CT);
+			a	{
+				padding: 0.5em 1em;
+				@include tablet {
+					&:last-child {padding-right: 0;}
+				}
 			}
 		}
 	}
+	.header-wrapper {
+		border-bottom: 1px solid $colorWhite;
+		@include tablet {
+			padding: 0.5em 0;
+		}
+		.wrapper {
+			@include flex($SB, $CT);
+			.logo-wrapper {
+				a {
+					@include flex($FS, $CT);
+					.img-wrap {width: 50px; margin-right: 0.5em; border-radius: 50%; overflow: hidden; border: 1px solid $colorWhite;}
+					span {font-size: $xs; font-family: $open; font-weight: 500; color: $txtPrimary;}
+				}
+			}
+			.navi-wrapper {
+				display: flex;
+				align-items: center;
+				.navi {
+					padding: 1.75em;
+					&:hover {background-color: $colorWhite; color: $txtPrimary;}
+				}
+				@include tablet {
+					display: none;
+				}
+			}
+			.mobile-wrapper {
+				display: none;
+				font-size: 1.5em;
+				cursor: pointer;
+				@include tablet {
+					display: block;
+				}
+			}
+		}
+	}
+	.mobile-sub {
+		position: absolute;
+		width: 100%;
+		display: none;
+		.sub {
+			color: $colorWhite;
+			background-color: $colorDark;
+			padding: 1.5em;
+			border-bottom: 1px solid $colorGrey;
+		}
+	}
+}
+
+.title-wrapper {
+	text-align: center;
+	margin: 2em 0;
+	h1 {font-size: 1.5em;}
 }
