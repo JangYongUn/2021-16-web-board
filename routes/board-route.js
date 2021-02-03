@@ -2,6 +2,7 @@ const express = require('express');
 const moment = require('moment');
 const path = require('path');
 const fs = require('fs-extra');
+const ip = require('request-ip');
 const { upload, imgExt } = require('../modules/multer');
 const { pool } = require('../modules/mysql-pool');
 const { err, alert, extName, srcPath, realPath } = require('../modules/util');
@@ -42,6 +43,9 @@ router.get('/view/:id', async (req, res, next) => {
 			rs.filename = rs.orifile;
 			rs.src = imgExt.includes(extName(rs.savefile)) ? srcPath(rs.savefile) : null;
 		}
+		sql = 'SELECT id FROM board-ip WHERE bid=? AND ip=?';
+		value = [rs.id, ip.getClientIp(req)];
+		r = await pool.query(sql, value);
 		res.render('board/view', { ...pugs, rs });
 	}
 	catch(e) {
