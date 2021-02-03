@@ -1,3 +1,5 @@
+const path = require('path');
+
 const err = (code, msg) => {
 	if(code == 404) {
 		return {
@@ -25,8 +27,8 @@ const err = (code, msg) => {
 }
 
 const alert = (msg, loc) => {
-	if(loc)
-	return `<script>alert('${msg}'); history.go(-1);</script>`;
+	if(loc) return `<script>alert('${msg}'); location.href="${loc}";</script>`;
+	else return `<script>alert('${msg}'); history.go(-1);</script>`;
 }
 
 const extName = (filename) => {
@@ -37,4 +39,4 @@ const srcPath = (filename) => {
 	return `/storages/${filename.substr(0, 9)}/${filename}`;
 }
 
-module.exports = { err }
+module.exports = { err, alert, extName, srcPath }

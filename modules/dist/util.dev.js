@@ -1,5 +1,7 @@
 "use strict";
 
+var path = require('path');
+
 var err = function err(code, msg) {
   if (code == 404) {
     return {
@@ -25,7 +27,7 @@ var err = function err(code, msg) {
 };
 
 var alert = function alert(msg, loc) {
-  if (loc) return "<script>alert('".concat(msg, "'); history.go(-1);</script>");
+  if (loc) return "<script>alert('".concat(msg, "'); location.href=\"").concat(loc, "\";</script>");else return "<script>alert('".concat(msg, "'); history.go(-1);</script>");
 };
 
 var extName = function extName(filename) {
@@ -37,5 +39,8 @@ var srcPath = function srcPath(filename) {
 };
 
 module.exports = {
-  err: err
+  err: err,
+  alert: alert,
+  extName: extName,
+  srcPath: srcPath
 };
