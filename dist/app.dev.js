@@ -12,13 +12,15 @@ var path = require('path');
 var _require = require('./modules/util'),
     err = _require.err;
 
-var session = require('express-session');
+var session = require('./modules/session');
+
+var local = require('./modules/local');
 /************* Server **************/
 
 
 app.listen(process.env.PORT, function () {
   console.log('=====================');
-  console.log('http://127.0.0.1:' + process.env.PORT);
+  console.log('http://localhost:' + process.env.PORT);
   console.log('=====================');
 });
 /************* View/pug **************/
@@ -34,10 +36,8 @@ app.use(express.urlencoded({
 }));
 /************* SESSION **************/
 
-app.set('trust proxy', 1);
-app.use(session({
-  secret: process.env.SESSION_KEY
-}));
+app.use(session());
+app.use(local());
 /************* Router **************/
 
 var authRouter = require('./routes/auth-route');
@@ -48,25 +48,18 @@ var apiRouter = require('./routes/api-route');
 
 var galleryRouter = require('./routes/gallery-route');
 
-var _require2 = require('console'),
-    Console = _require2.Console;
-
 app.use('/', express["static"](path.join(__dirname, 'public')));
+app.use('/storages', express["static"](path.join(__dirname, 'uploads')));
 app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/api', apiRouter);
 app.use('/gallery', galleryRouter);
-app.get('/scss', function (req, res, next) {
-  res.render('scss', {
-    title: 'SCSS 테스트',
-    css: 'scss-test'
-  });
-});
 /************* Error **************/
 
 app.use(function (req, res, next) {
   next(err(404));
 });
 app.use(function (err, req, res, next) {
+  console.log(err);
   res.render('error', err);
 });

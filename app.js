@@ -4,12 +4,13 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const { err } = require('./modules/util');
-const session = require('express-session')
+const session = require('./modules/session');
+const local = require('./modules/local');
 
 /************* Server **************/
 app.listen(process.env.PORT, () => {
 	console.log('=====================');
-	console.log('http://127.0.0.1:'+process.env.PORT);
+	console.log('http://localhost:'+process.env.PORT);
 	console.log('=====================');
 });
 
@@ -23,30 +24,22 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 /************* SESSION **************/
-app.set('trust proxy', 1);
-app.use(session({
-	secret:process.env.SESSION_KEY;
-})
-);
-
-
+app.use(session());
+app.use(local());
 
 /************* Router **************/
 const authRouter = require('./routes/auth-route');
 const boardRouter = require('./routes/board-route');
 const apiRouter = require('./routes/api-route');
 const galleryRouter = require('./routes/gallery-route');
-const { Console } = require('console');
 
 app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/storages', express.static(path.join(__dirname, 'uploads')));
 app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/api', apiRouter);
 app.use('/gallery', galleryRouter);
 
-app.get('/scss', (req, res, next) => {
-	res.render('scss', {title: 'SCSS 테스트', css: 'scss-test'});
-})
 
 /************* Error **************/
 app.use((req, res, next) => {
@@ -54,5 +47,6 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+	console.log(err);
 	res.render('error', err);
 });
