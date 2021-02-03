@@ -170,7 +170,7 @@ router.get('/create', isUser, function (req, res, next) {
     tinyKey: process.env.TINY_KEY
   });
 
-  res.render('board/create', pug);
+  res.render('board/create', pugs);
 });
 router.post('/save', isUser, upload.single('upfile'), function _callee4(req, res, next) {
   var _req$body, title, content, writer, sql, value, r;
@@ -285,4 +285,5 @@ router.get('/change/:id', isUser, function _callee6(req, res, next) {
     }
   });
 });
+router.get('/api/delete/:id'.isUser.as);
 module.exports = router;

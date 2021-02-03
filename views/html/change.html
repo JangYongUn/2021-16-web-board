@@ -24,13 +24,13 @@
       </div>
     </header>
     <inculude>../include/titlebar</inculude>
-    <div class="create-wrapper wrapper">
-      <form action="/board/save" method="post" onsubmit="return onSave(this);" enctype="multipart/form-data">
+    <div class="change-wrapper wrapper">
+      <form action="/board/update" method="post" onsubmit="return onUpdate(this);" enctype="multipart/form-data">
         <ul class="list-wrapper">
           <li class="list-wrap">
             <div class="title">제목</div>
             <div class="list">
-              <input class="form-control" type="text" name="title" placeholder="제목"/>
+              <input class="form-control" type="text" name="title" value="$" placeholder="제목"/>
             </div>
           </li>
           <li class="list-wrap">

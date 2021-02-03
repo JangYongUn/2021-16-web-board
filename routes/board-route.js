@@ -78,7 +78,7 @@ router.get(['/', '/list'], async (req, res, next) => {
 
 router.get('/create', isUser, (req, res, next) => {
 	const pug = { ...pugs, tinyKey: process.env.TINY_KEY }
-	res.render('board/create', pug);
+	res.render('board/create', pugs);
 });
 
 router.post('/save', isUser, upload.single('upfile'), async (req, res, next) => {
@@ -122,12 +122,15 @@ router.get('/remove/:id', isUser, async (req, res, next) => {
 
 router.get('/change/:id', isUser, async (req, res, next) => {
 	try {
-		
+
 	}
 	catch {
 		next(err(e.message));
 	}
 });
 
+router.get('/api/remove/:id'. isUser. async (req, res, next) {
+
+});
 
 module.exports = router;
