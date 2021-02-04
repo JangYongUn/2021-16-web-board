@@ -9,7 +9,11 @@ const stream = rfs.createStream(/* "file.log" */ moment().format('YYYYMMDD')+'.l
 	path: path.join(__dirname, '../log');
 });
 
+const stream = rfs.createStream(/* "file.log" */ moment().format('YYYYMMDD')+'_c.log', {
+	interval: "1d",
+	path: path.join(__dirname, '../log');
+});
 
 module.exports = () => {
-	
+
 };
