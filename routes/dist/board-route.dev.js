@@ -197,41 +197,36 @@ router.get('/create', isUser, function (req, res, next) {
   res.render('board/create', pugs);
 });
 router.post('/save', isUser, upload.single('upfile'), function _callee4(req, res, next) {
-  var opt, _opt, rs;
-
+  var opt, rs;
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          opt = {
-            field: []
-          };
-
           if (!req.banExt) {
-            _context4.next = 5;
+            _context4.next = 4;
             break;
           }
 
           res.send(alert("".concat(req.banExt, " \uD30C\uC77C\uC740 \uC5C5\uB85C\uB4DC \uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.")));
-          _context4.next = 10;
+          _context4.next = 9;
           break;
 
-        case 5:
-          _opt = {
+        case 4:
+          opt = {
             file: req.file,
             field: ['title', 'content', 'writer', 'uid'],
             data: _objectSpread({}, req.body, {
               uid: req.session.user.id
             })
           };
-          _context4.next = 8;
-          return regeneratorRuntime.awrap(sql(next, 'board', 'I', _opt));
+          _context4.next = 7;
+          return regeneratorRuntime.awrap(sql(next, 'board', 'I', opt));
 
-        case 8:
+        case 7:
           rs = _context4.sent;
           res.redirect('/board');
 
-        case 10:
+        case 9:
         case "end":
           return _context4.stop();
       }
@@ -239,65 +234,77 @@ router.post('/save', isUser, upload.single('upfile'), function _callee4(req, res
   });
 });
 router.get('/remove/:id', isUser, function _callee5(req, res, next) {
-  var _sql, value, rs, r;
+  var opt, rs, _sql, value, _rs, r;
 
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
-          _context5.prev = 0;
+          opt = {
+            field: ['savefile'],
+            where: {
+              op: 'AND',
+              field: [['id', req.params.id], ['uid', req.session.user.id]]
+            }
+          };
+          _context5.next = 3;
+          return regeneratorRuntime.awrap(sql(next, 'board', 'S', opt));
+
+        case 3:
+          rs = _context5.sent;
+          _context5.prev = 4;
           _sql = 'SELECT savefile FROM board WHERE id=? AND uid=?';
           value = [req.params.id, req.session.user.id];
-          _context5.next = 5;
+          _context5.next = 9;
           return regeneratorRuntime.awrap(pool.query(_sql, value));
 
-        case 5:
+        case 9:
           r = _context5.sent;
 
           if (!(r[0].length == 0)) {
-            _context5.next = 10;
-            break;
-          }
-
-          res.send(alert('정상적인 접근이 아닙니다.'));
-          _context5.next = 19;
-          break;
-
-        case 10:
-          rs = r[0][0];
-
-          if (!rs.savefile) {
             _context5.next = 14;
             break;
           }
 
-          _context5.next = 14;
-          return regeneratorRuntime.awrap(fs.remove(realPath(rs.savefile)));
+          res.send(alert('정상적인 접근이 아닙니다.'));
+          _context5.next = 23;
+          break;
 
         case 14:
+          _rs = r[0][0];
+
+          if (!_rs.savefile) {
+            _context5.next = 18;
+            break;
+          }
+
+          _context5.next = 18;
+          return regeneratorRuntime.awrap(fs.remove(realPath(_rs.savefile)));
+
+        case 18:
           _sql = 'DELETE FROM board WHERE id=? AND uid=?';
-          _context5.next = 17;
+          _context5.next = 21;
           return regeneratorRuntime.awrap(pool.query(_sql, value));
 
-        case 17:
+        case 21:
           r = _context5.sent;
           res.redirect('/board');
 
-        case 19:
-          _context5.next = 24;
+        case 23:
+          _context5.next = 28;
           break;
 
-        case 21:
-          _context5.prev = 21;
-          _context5.t0 = _context5["catch"](0);
+        case 25:
+          _context5.prev = 25;
+          _context5.t0 = _context5["catch"](4);
           next(err(_context5.t0.message));
 
-        case 24:
+        case 28:
         case "end":
           return _context5.stop();
       }
     }
-  }, null, null, [[0, 21]]);
+  }, null, null, [[4, 25]]);
 });
 router.get('/change/:id', isUser, function _callee6(req, res, next) {
   var _sql2, value, rs, r;

@@ -89,9 +89,6 @@ router.get('/create', isUser, (req, res, next) => {
 });
 
 router.post('/save', isUser, upload.single('upfile'), async(req, res, next) => {
-	const opt = {field: []}
-	
-	
 	if(req.banExt) {
 		res.send(alert(`${req.banExt} 파일은 업로드 할 수 없습니다.`));
 	}
@@ -107,6 +104,14 @@ router.post('/save', isUser, upload.single('upfile'), async(req, res, next) => {
 });
 
 router.get('/remove/:id', isUser, async (req, res, next) => {
+	const opt = {
+		field: ['savefile'],
+		where: {op: 'AND', field: [['id', req.params.id], ['uid', req.session.user.id]]}
+	}
+	const rs = await sql(next, 'board', 'S', opt);
+	
+	
+	
 	try {
 		let sql, value, rs, r;
 		sql = 'SELECT savefile FROM board WHERE id=? AND uid=?';
