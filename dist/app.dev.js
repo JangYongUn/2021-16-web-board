@@ -15,6 +15,8 @@ var _require = require('./modules/util'),
 var session = require('./modules/session');
 
 var local = require('./modules/local');
+
+var logger = require('./modules/logger');
 /************* Server **************/
 
 
@@ -48,8 +50,10 @@ var apiRouter = require('./routes/api-route');
 
 var galleryRouter = require('./routes/gallery-route');
 
+app.use(logger('common'));
 app.use('/', express["static"](path.join(__dirname, 'public')));
 app.use('/storages', express["static"](path.join(__dirname, 'uploads')));
+app.use(logger('combined'));
 app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/api', apiRouter);
@@ -60,6 +64,5 @@ app.use(function (req, res, next) {
   next(err(404));
 });
 app.use(function (err, req, res, next) {
-  console.log(err);
   res.render('error', err);
 });
