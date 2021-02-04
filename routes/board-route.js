@@ -109,9 +109,18 @@ router.get('/remove/:id', isUser, async (req, res, next) => {
 		where: {op: 'AND', field: [['id', req.params.id], ['uid', req.session.user.id]]}
 	}
 	const rs = await sql(next, 'board', 'S', opt);
-	
-	
-	
+	if(r[0].length == 0) res.send(alert('정상적인 접근이 아닙니다.'));
+	else {
+		if(rs[0].savefile) await fs[0].remove(realPath(rs[0].savefile));
+		const opt = {
+			field: ['id', 'uid'],
+			where: {op: 'AND' , field: [['id', req.params.id], ['uid', req.session.user.id]]}
+		}
+		const rs[0] = await sql(next, 'board', 'D', opt);
+		res.redirect('/board');
+	}
+});
+/* 
 	try {
 		let sql, value, rs, r;
 		sql = 'SELECT savefile FROM board WHERE id=? AND uid=?';
@@ -129,7 +138,7 @@ router.get('/remove/:id', isUser, async (req, res, next) => {
 	catch(e) {
 		next(err(e.message));
 	}
-});
+}); */
 
 router.get('/change/:id', isUser, async (req, res, next) => {
 	try {

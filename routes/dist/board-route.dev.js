@@ -6,6 +6,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 var express = require('express');
 
 var moment = require('moment');
@@ -234,7 +236,7 @@ router.post('/save', isUser, upload.single('upfile'), function _callee4(req, res
   });
 });
 router.get('/remove/:id', isUser, function _callee5(req, res, next) {
-  var opt, rs, _sql, value, _rs, r;
+  var opt, rs, _opt, _rs, _sql, _value, _rs2, _r;
 
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
@@ -252,62 +254,99 @@ router.get('/remove/:id', isUser, function _callee5(req, res, next) {
 
         case 3:
           rs = _context5.sent;
-          _context5.prev = 4;
-          _sql = 'SELECT savefile FROM board WHERE id=? AND uid=?';
-          value = [req.params.id, req.session.user.id];
-          _context5.next = 9;
-          return regeneratorRuntime.awrap(pool.query(_sql, value));
-
-        case 9:
-          r = _context5.sent;
 
           if (!(r[0].length == 0)) {
-            _context5.next = 14;
+            _context5.next = 8;
             break;
           }
 
           res.send(alert('정상적인 접근이 아닙니다.'));
-          _context5.next = 23;
+          _context5.next = 20;
           break;
 
-        case 14:
-          _rs = r[0][0];
-
-          if (!_rs.savefile) {
-            _context5.next = 18;
+        case 8:
+          if (!_rs[0].savefile) {
+            _context5.next = 11;
             break;
           }
 
+          _context5.next = 11;
+          return regeneratorRuntime.awrap(fs[0].remove(realPath(_rs[0].savefile)));
+
+        case 11:
+          _opt = {
+            field: []
+          };
+          _context5.next = 14;
+          return regeneratorRuntime.awrap(sql(next, 'board', 'D', _opt));
+
+        case 14:
+          _rs = _context5.sent;
+          sql = (_readOnlyError("sql"), 'DELETE FROM board WHERE id=? AND uid=?');
           _context5.next = 18;
-          return regeneratorRuntime.awrap(fs.remove(realPath(_rs.savefile)));
+          return regeneratorRuntime.awrap(pool.query(sql, value));
 
         case 18:
-          _sql = 'DELETE FROM board WHERE id=? AND uid=?';
-          _context5.next = 21;
-          return regeneratorRuntime.awrap(pool.query(_sql, value));
-
-        case 21:
           r = _context5.sent;
           res.redirect('/board');
 
-        case 23:
-          _context5.next = 28;
-          break;
+        case 20:
+          _context5.prev = 20;
+          _sql = 'SELECT savefile FROM board WHERE id=? AND uid=?';
+          _value = [req.params.id, req.session.user.id];
+          _context5.next = 25;
+          return regeneratorRuntime.awrap(pool.query(_sql, _value));
 
         case 25:
-          _context5.prev = 25;
-          _context5.t0 = _context5["catch"](4);
+          _r = _context5.sent;
+
+          if (!(_r[0].length == 0)) {
+            _context5.next = 30;
+            break;
+          }
+
+          res.send(alert('정상적인 접근이 아닙니다.'));
+          _context5.next = 39;
+          break;
+
+        case 30:
+          _rs2 = _r[0][0];
+
+          if (!_rs2.savefile) {
+            _context5.next = 34;
+            break;
+          }
+
+          _context5.next = 34;
+          return regeneratorRuntime.awrap(fs.remove(realPath(_rs2.savefile)));
+
+        case 34:
+          _sql = 'DELETE FROM board WHERE id=? AND uid=?';
+          _context5.next = 37;
+          return regeneratorRuntime.awrap(pool.query(_sql, _value));
+
+        case 37:
+          _r = _context5.sent;
+          res.redirect('/board');
+
+        case 39:
+          _context5.next = 44;
+          break;
+
+        case 41:
+          _context5.prev = 41;
+          _context5.t0 = _context5["catch"](20);
           next(err(_context5.t0.message));
 
-        case 28:
+        case 44:
         case "end":
           return _context5.stop();
       }
     }
-  }, null, null, [[4, 25]]);
+  }, null, null, [[20, 41]]);
 });
 router.get('/change/:id', isUser, function _callee6(req, res, next) {
-  var _sql2, value, rs, r;
+  var _sql2, _value2, rs, _r2;
 
   return regeneratorRuntime.async(function _callee6$(_context6) {
     while (1) {
@@ -315,14 +354,14 @@ router.get('/change/:id', isUser, function _callee6(req, res, next) {
         case 0:
           _context6.prev = 0;
           _sql2 = 'SELECT * FROM board WHERE id=? AND uid=?';
-          value = [req.params.id, req.session.user.id];
+          _value2 = [req.params.id, req.session.user.id];
           _context6.next = 5;
-          return regeneratorRuntime.awrap(pool.query(_sql2, value));
+          return regeneratorRuntime.awrap(pool.query(_sql2, _value2));
 
         case 5:
-          r = _context6.sent;
-          if (r[0].length == 0) res.send(alert('정상적인 접근이 아닙니다.'));else {
-            rs = r[0][0];
+          _r2 = _context6.sent;
+          if (_r2[0].length == 0) res.send(alert('정상적인 접근이 아닙니다.'));else {
+            rs = _r2[0][0];
 
             if (rs.savefile) {
               rs.filename = rs.orifile;
@@ -349,7 +388,7 @@ router.get('/change/:id', isUser, function _callee6(req, res, next) {
   }, null, null, [[0, 9]]);
 });
 router.get('/api/remove/:id', isUser, function _callee7(req, res, next) {
-  var _sql3, value, r, rs, id;
+  var _sql3, _value3, _r3, rs, id;
 
   return regeneratorRuntime.async(function _callee7$(_context7) {
     while (1) {
@@ -358,14 +397,14 @@ router.get('/api/remove/:id', isUser, function _callee7(req, res, next) {
           _context7.prev = 0;
           id = req.params.id;
           _sql3 = 'SELECT savefile FROM board WHERE id=? AND uid=?';
-          value = [req.params.id, req.session.user.id];
+          _value3 = [req.params.id, req.session.user.id];
           _context7.next = 6;
-          return regeneratorRuntime.awrap(pool.query(_sql3, value));
+          return regeneratorRuntime.awrap(pool.query(_sql3, _value3));
 
         case 6:
-          r = _context7.sent;
+          _r3 = _context7.sent;
 
-          if (!(r[0].length == 0)) {
+          if (!(_r3[0].length == 0)) {
             _context7.next = 11;
             break;
           }
@@ -377,17 +416,17 @@ router.get('/api/remove/:id', isUser, function _callee7(req, res, next) {
           break;
 
         case 11:
-          rs = r[0][0];
+          rs = _r3[0][0];
           _context7.next = 14;
           return regeneratorRuntime.awrap(fs.remove(realPath(rs.savefile)));
 
         case 14:
           _sql3 = 'UPDATE board SET orifile=NULL, savefile=NULL WHERE id=? AND uid=?';
           _context7.next = 17;
-          return regeneratorRuntime.awrap(pool.query(_sql3, value));
+          return regeneratorRuntime.awrap(pool.query(_sql3, _value3));
 
         case 17:
-          r = _context7.sent;
+          _r3 = _context7.sent;
           res.json({
             code: 200
           });
@@ -409,7 +448,7 @@ router.get('/api/remove/:id', isUser, function _callee7(req, res, next) {
   }, null, null, [[0, 21]]);
 });
 router.post('/update', isUser, upload.single('upfile'), function _callee8(req, res, next) {
-  var _sql4, value, rs, r, _req$body, title, content, writer, id;
+  var _sql4, _value4, rs, _r4, _req$body, title, content, writer, id;
 
   return regeneratorRuntime.async(function _callee8$(_context8) {
     while (1) {
@@ -424,24 +463,24 @@ router.post('/update', isUser, upload.single('upfile'), function _callee8(req, r
           }
 
           _sql4 = 'SELECT savefile FROM board WHERE id=? AND uid=?';
-          value = [id, req.session.user.id];
+          _value4 = [id, req.session.user.id];
           _context8.next = 7;
-          return regeneratorRuntime.awrap(pool.query(_sql4, value));
+          return regeneratorRuntime.awrap(pool.query(_sql4, _value4));
 
         case 7:
-          r = _context8.sent;
+          _r4 = _context8.sent;
 
-          if (!(r[0].length && r[0][0].savefile)) {
+          if (!(_r4[0].length && _r4[0][0].savefile)) {
             _context8.next = 11;
             break;
           }
 
           _context8.next = 11;
-          return regeneratorRuntime.awrap(fs.remove(realPath(r[0][0].savefile)));
+          return regeneratorRuntime.awrap(fs.remove(realPath(_r4[0][0].savefile)));
 
         case 11:
           _sql4 = 'UPDATE board SET title=?, content=?, writer=? ';
-          value = [title, content, writer];
+          _value4 = [title, content, writer];
 
           if (!req.banExt) {
             _context8.next = 17;
@@ -455,16 +494,19 @@ router.post('/update', isUser, upload.single('upfile'), function _callee8(req, r
         case 17:
           if (req.file) {
             _sql4 += ', orifile=?, savefile=?';
-            value.push(req.file.originalname, req.file.filename);
+
+            _value4.push(req.file.originalname, req.file.filename);
           }
 
           _sql4 += ' WHERE id=? AND uid=?';
-          value.push(id, req.session.user.id);
+
+          _value4.push(id, req.session.user.id);
+
           _context8.next = 22;
-          return regeneratorRuntime.awrap(pool.query(_sql4, value));
+          return regeneratorRuntime.awrap(pool.query(_sql4, _value4));
 
         case 22:
-          r = _context8.sent;
+          _r4 = _context8.sent;
           res.redirect('/board');
 
         case 24:
