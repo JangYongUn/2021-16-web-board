@@ -89,6 +89,9 @@ router.get('/create', isUser, (req, res, next) => {
 });
 
 router.post('/save', isUser, upload.single('upfile'), async(req, res, next) => {
+	const opt = {field: []}
+	
+	
 	if(req.banExt) {
 		res.send(alert(`${req.banExt} 파일은 업로드 할 수 없습니다.`));
 	}

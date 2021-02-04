@@ -197,36 +197,41 @@ router.get('/create', isUser, function (req, res, next) {
   res.render('board/create', pugs);
 });
 router.post('/save', isUser, upload.single('upfile'), function _callee4(req, res, next) {
-  var opt, rs;
+  var opt, _opt, rs;
+
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
+          opt = {
+            field: []
+          };
+
           if (!req.banExt) {
-            _context4.next = 4;
+            _context4.next = 5;
             break;
           }
 
           res.send(alert("".concat(req.banExt, " \uD30C\uC77C\uC740 \uC5C5\uB85C\uB4DC \uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.")));
-          _context4.next = 9;
+          _context4.next = 10;
           break;
 
-        case 4:
-          opt = {
+        case 5:
+          _opt = {
             file: req.file,
             field: ['title', 'content', 'writer', 'uid'],
             data: _objectSpread({}, req.body, {
               uid: req.session.user.id
             })
           };
-          _context4.next = 7;
-          return regeneratorRuntime.awrap(sql(next, 'board', 'I', opt));
+          _context4.next = 8;
+          return regeneratorRuntime.awrap(sql(next, 'board', 'I', _opt));
 
-        case 7:
+        case 8:
           rs = _context4.sent;
           res.redirect('/board');
 
-        case 9:
+        case 10:
         case "end":
           return _context4.stop();
       }
