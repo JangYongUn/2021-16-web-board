@@ -38,9 +38,14 @@ var srcPath = function srcPath(filename) {
   return "/storages/".concat(filename.substr(0, 9), "/").concat(filename);
 };
 
+var realPath = function realPath(filename) {
+  return path.join(__dirname, '../uploads', filename.substr(0, 9), filename);
+};
+
 module.exports = {
   err: err,
   alert: alert,
   extName: extName,
-  srcPath: srcPath
+  srcPath: srcPath,
+  realPath: realPath
 };
