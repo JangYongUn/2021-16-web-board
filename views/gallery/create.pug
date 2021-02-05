@@ -4,7 +4,7 @@ block js
 	script(src="/js/editor.js")
 block content
 	.create-wrapper.wrapper
-		form(action="/board/save" method="post" onsubmit="return onSave(this);" enctype="multipart/form-data")
+		form(action="/gallery/save" method="post" onsubmit="return onSave(this);" enctype="multipart/form-data")
 			ul.list-wrapper
 				li.list-wrap
 					.title 제목
@@ -14,12 +14,16 @@ block content
 					.title 작성자
 					.list
 						input.form-control(type="text" name="writer" placeholder="작성자")
-				li.list-wrap
+				li.list-wrap.file-wrap
 					.title 첨부이미지
 					.list
 						input.form-control-file(type="file" name="upfile")
-						.text-success.pt-3 * jpg png gif pdf zip ppt xls doc hwp txt만 업로드 가능합니다.
-				li.list-wrap
+					.bts
+						a.bt-plus(href="javascript: onPlus();")
+							i.fa.fa-plus-circle.text-success
+				li.file-wrapper
+				li.text-center.text-success.pb-3 * jpg png gif 파일이 업로드 가능합니다.
+				li.list-wrap.tiny-wrap
 					.w-100
 						textarea#content.form-control(name="content")
 			.text-center.py-4

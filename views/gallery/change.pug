@@ -4,7 +4,7 @@ block js
 	script(src="/js/editor.js")
 block content
 	.change-wrapper.wrapper
-		form(action="/gallery/update" method="post" onsubmit="return onUpdate(this);" enctype="multipart/form-data")
+		form(action="/board/update" method="post" onsubmit="return onUpdate(this);" enctype="multipart/form-data")
 			input(type="hidden" name="id" value=`${rs.id}`)
 			ul.list-wrapper
 				li.list-wrap
@@ -16,7 +16,7 @@ block content
 					.list
 						input.form-control(type="text" name="writer" value=`${rs.writer}` placeholder="작성자")
 				li.list-wrap
-					.title 첨부이미지
+					.title 첨부파일
 					.list
 						.file-wrap
 							if rs.savefile

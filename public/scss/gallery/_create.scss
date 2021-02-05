@@ -6,24 +6,24 @@
 		border-bottom: none;
 		.list-wrap {
 			margin: 0.5em 0;
-			@include flex($SB);
+			@include flex($SB, $CT);
 			.title {
-				width: 15%; line-height: 40px; height: 40px; min-width: 150px; border-right: 3px solid $colorGreen;
+				width: 15%; line-height: 40px; height: 40px; min-width: 150px;
+				margin-right: 30px;
+				border-right: 3px solid $colorGreen;
 				@include mobile {
 					min-width: 80px;
 				}
 			}
 			.list {
-				width: 83%;
+				flex: 1 1;
 				line-height: 1.25;
-				@include mobile {
-					padding-left: 20px;
-				}
 			}
-			&:nth-child(3) {
+			.bts > i {cursor: pointer;}
+			&.file-wrap {
 				.list {padding-top: 0.325em;}
 			}
-			&:nth-child(4) {padding-top: 2em;}
+			&.tiny-wrap {padding-top: 2em;}
 		}
 	}
 }
