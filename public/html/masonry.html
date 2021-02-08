@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Masonry</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/reset.css">
+	<style>
+		ul{list-style: none;}
+		.wrapper {max-width: 1200px; width: 96%; margin: auto;}
+		.grid-item { width: 200px; }
+		.grid-item--width2 { width: 400px; }
+	</style>
+	<script src="/js/jquery-3.5.1.min.js"></script>
+	<script src="/js/masonry.min.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<ul class="grid">
+			<li class="grid-item">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item">
+				<img src="/img/ext/gif.png" class="w-100">
+			</li>
+			<li class="grid-item">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item grid-item--width2">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item grid-item--width2">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+			<li class="grid-item">
+				<img src="/img/ext/doc.png" class="w-100">
+			</li>
+		</ul>
+	</div>
+
+	<script>
+		$('.grid').masonry({
+			// options
+			itemSelector: '.grid-item',
+			columnWidth: 200
+		});
+	</script>
+</body>
+</html>
