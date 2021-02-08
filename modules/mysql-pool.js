@@ -53,10 +53,19 @@ where : {
 /******* router 실행 ********/
 // await sqlGen('board', ['I', 'U', 'D', 'S'], {});
 
-const sqlGen = async (next, table, mode, opt={}) => {
+const sqlFn = async (table, mode, opt, req, res, next) => {
 	try {
-		let {	field=[], data={}, file, where, order, limit } = opt;
+		let {	
+			field = [], 
+			data = {}, 
+			file = (req ? req.file : null), 
+			files = (req ? req.files : null), 
+			where, 
+			order, 
+			limit } = opt;
 		let sql, value=[], r, tmp;
+
+		data = { ...data, ...(req && req.body ? req.body : {}) };
 	
 		mode = mode.toUpperCase();
 		if(mode == 'I') {
@@ -73,7 +82,11 @@ const sqlGen = async (next, table, mode, opt={}) => {
 		}
 	
 		tmp = Object.entries(data).filter( v => field.includes(v[0]));
+
 		if(file) tmp.push(['savefile', file.filename],['orifile', file.originalname]);
+		if(files) {
+			// upload.array();
+		}
 		
 		for(let v of tmp) {
 			sql += v[0] + '=?,';
@@ -119,5 +132,16 @@ const sqlGen = async (next, table, mode, opt={}) => {
 	}
 }
 
+const sqlGen = async (next, table, mode, opt={}) => {
+	return await sqlFn(table, mode, opt, null, null, next);
+}
 
-module.exports = { mysql, pool, sqlGen };
+const sqlMiddle = async (table, mode, opt={}) => {
+	return async (req, res, next) => {
+		const rs = await sqlFn(table, mode, opt, req, res, next);
+		req.rs = rs;
+	}
+}
+
+
+module.exports = { mysql, pool, sqlGen, sqlMiddle };

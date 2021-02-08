@@ -164,7 +164,7 @@ router.get('/change/:id', isUser, async (req, res, next) => {
 	catch(e) {
 		next(err(e.message));
 	}
-});
+
 
 router.get('/api/remove/:id', isUser, async (req, res, next) => {
 	try {
