@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const ip = require('request-ip');
 const { uploadImg, imgExt } = require('../modules/multer');
-const { pool, sqlGen: sql } = require('../modules/mysql-pool');
+const { pool, sqlMiddle: sql } = require('../modules/mysql-pool');
 const { err, alert, extName, srcPath, realPath } = require('../modules/util');
 const pagers = require('../modules/pager');
 const { isUser, isGuest } = require('../modules/auth');
@@ -17,13 +17,54 @@ const pugs = {
 	headerTitle: 'Node/Express를 활용한 갤러리' 
 }
 
+
+router.get(['/', '/list'], async (req, res, next) => {
+	let sql, value, r, r2, rs, pager;
+	sql = `SELECT count(id) FROM gallery`;
+	r = await pool.query(sql);
+	pager = pagers(req.query.page || 1, r[0][0]['count(id)']);
+	pager.router = 'gallery';
+	sql = `SELECT * FROM gallery LIMIT ${pager.startIdx}, ${pager.listCnt}`;
+	r = await pool.query(sql);
+	rs = r[0];
+	for(let v of rs) {
+		sql = `SELECT * FROM gallery_file WHERE fid=${v.id} ORDER BY id ASC LIMIT 0, 2`;
+		r2 = await pool.query(sql);
+		v.src = [];
+		if(r2[0].length == 0) {
+			v.src[0] = 'http://via.placeholder.com/300?text=No+Image';
+		}
+		else if(r2[0].length == 1) {
+			v.src[0] = srcPath(r2[0][0].savefile);
+		}
+		else {
+			v.src[0] = srcPath(r2[0][0].savefile);
+			v.src[1] = srcPath(r2[0][1].savefile);
+		}
+	}
+	console.log(pager);
+	res.render('gallery/list', { ...pugs, rs, pager });
+});
+
+
 router.get('/create', isUser, (req, res, next) => {
 	res.render('gallery/create', pugs);
 });
 
 router.post('/save', isUser, uploadImg.array('upfile', 10), async (req, res, next) => {
-	console.log(req.banExt)
-	res.json(req.files);
+	let sql, value, rs, r, fid;
+	sql = `INSERT INTO gallery SET title=?, content=?, writer=?, uid=?`;
+	value = [req.body.title, req.body.writer, req.body.content, req.session.user.id];
+	rs = await pool.query(sql, value);
+	fid = rs[0].insertId;
+	if(req.files) {
+		for(let v of req.files) {
+			sql = `INSERT INTO gallery_file SET savefile=?, orifile=?, fid=?`;
+			value = [v.filename, v.originalname, fid];
+			await pool.query(sql, value);
+		}
+	}
+	res.redirect('/gallery');
 });
 
 

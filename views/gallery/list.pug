@@ -1,7 +1,14 @@
 extends ../layout/layout-default
+block js 
+	script(src="/js/imagesloaded.pkgd.min.js")
+	script(src="/js/masonry.pkgd.min.js")
 block content
 	.list-wrapper.wrapper 
-		
+		ul.grid
+			li.grid-sizer
+			each v in rs
+				li.grid-item 
+					img.w-100(src=`${v.src[0]}` alt="img")
 		include ../include/pager
 		if user.id
 			.text-center.py-3
