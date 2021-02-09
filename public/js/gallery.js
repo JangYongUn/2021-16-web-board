@@ -1,3 +1,6 @@
+var swiper;
+
+
 function onPlus(el) {
 	if($(".file-wrapper .file-wrap").length < 9) {
 		var html = ``;
@@ -55,3 +58,38 @@ function onImagesLoaded() {
 	});
 }
 
+
+function onInfo(el, e, id) {
+	e.stopPropagation();
+	$(".modal-wrapper").css('display', 'flex');
+	$(".modal-wrapper").css('opacity');
+	$(".modal-wrapper").addClass('active');
+	if(!swiper) {
+		swiper = new Swiper('.swiper-container', {
+			loop: true,
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true
+			},
+		});
+	}
+}
+
+function onDelete(el, e, id) {
+	e.stopPropagation();
+	if( confirm('정말로 삭제하시겠습니까?') ){
+		location.href = '/gallery/delete/'+id;
+	}
+}
+
+function onEdit(el, e, id) {
+	e.stopPropagation();
+	location.href = '/gallery/change/'+id;
+}
+
+function onInfoClose() {
+	$(".modal-wrapper").removeClass('active');
+	setTimeout(function(){
+		$(".modal-wrapper").css('display', 'none');
+	}, 350);
+}
