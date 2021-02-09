@@ -1,25 +1,33 @@
 extends ../layout/layout-default
-block js
+block js 
 	script(src="/js/imagesloaded.pkgd.min.js")
 	script(src="/js/masonry.pkgd.min.js")
 block content
-	.list-wrapper.wrapper
+	.list-wrapper.wrapper 
 		ul.grid
 			li.grid-sizer
 			each v in rs
-				li.grid-item
+				li.grid-item(onclick="onInfo(this, event)")
 					.grid-inside
-					if v.src[1]
-					img.w-100.ani(src=`${v.src[0]}` alt="img")
-					else 
-					img.w-100.ani(src=`${v.src[0]}` alt="img")
-					if v.src[1]
-					img.w-100.ani(src=`${v.src[1]}` alt="img")
-				.grid-info
-					i.fa.fa-edit(onclick="onEdit(this)")
-					i.fa.fa-trash-alt(onclick="onDelete(this)")
-					i.fa.fa-ellipsis-h(onclick="onInfo(this)")
+						if v.src[1]
+							img.w-100.ani(src=`${v.src[0]}` alt="img")
+						else 
+							img.w-100(src=`${v.src[0]}` alt="img")
+						if v.src[1]
+							img.w-100.ani(src=`${v.src[1]}` alt="img")
+					.grid-info(onclick="event.stop") 
+						i.fa.fa-edit(onclick="onEdit(this, event)") 
+						i.fa.fa-trash-alt(onclick="onDelete(this, event)") 
+						i.fa.fa-ellipsis-h(onclick="onInfo(this, event)") 
 		include ../include/pager
 		if user.id
 			.text-center.py-3
 				a.btn.btn-success(href="/board/create") 글쓰기
+	.modal-wrapper
+		.bt-close(onclick="onInfoClose();")
+			i.fa.fa-times
+		.modal-wrap
+			.swiper-container
+				.swiper-wrapper
+					.swiper-slide
+						img.mw-100(src="/img/", alt="이미지")

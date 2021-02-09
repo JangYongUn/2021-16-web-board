@@ -54,3 +54,4 @@ function onImagesLoaded() {
 		percentPosition: true
 	});
 }
+
