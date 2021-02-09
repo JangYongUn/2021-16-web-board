@@ -59,7 +59,7 @@ function onImagesLoaded() {
 }
 
 
-function onInfo(el, e, id) {
+function onModalShow(el, e, id) {
 	e.stopPropagation();
 	$(".modal-wrapper").css('display', 'flex');
 	$(".modal-wrapper").css('opacity');
@@ -87,7 +87,7 @@ function onEdit(el, e, id) {
 	location.href = '/gallery/change/'+id;
 }
 
-function onInfoClose() {
+function onModalHide() {
 	$(".modal-wrapper").removeClass('active');
 	setTimeout(function(){
 		$(".modal-wrapper").css('display', 'none');
