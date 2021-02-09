@@ -4,29 +4,31 @@
 		border-radius: 4px;
 		cursor: pointer;
 		overflow: hidden;
-		.grid-inside{
+		.grid-inside {
 			@include flex($FS, $FS);
 			overflow: hidden;
-			img{
+			img {
 				transition: all 0.5s;
 			}
 		}
-		.grid-info{
-			@include layer(absolute, auto, 0, 0, 0);
+		.grid-info {
 			padding: 1em;
-			background-color: rgba(0, 4, 14, 0.9);
+			background-color: rgba(0, 4, 14, 0.8);
 			color: $colorLighter;
+			@include layer(absolute, auto, 0, 0, 0);
 			@include flex($CT, $CT);
 			transform: translateY(3.5em);
 			transition: all 0.35s;
 			transition-delay: 0.25s;
-			.fa {margin: 0 0.5em;}
+			.fa {
+				margin: 0 .5em;
+			}
 		}
 		&:hover {
-			.drid-info{
+			.grid-info {
 				transform: translateY(0);
 			}
-			img{
+			img.ani {
 				transform: translateX(-100%);
 			}
 		}
@@ -37,7 +39,7 @@
 		padding: 1%;
 		margin: 1%;
 		@include desktop {
-			width: 22.25%;
+			width: 22.5%;
 			padding: 1.25%;
 			margin: 1.25%;
 		}
@@ -56,5 +58,27 @@
 			padding: 2%;
 			margin: 2%;
 		}
+	}
+}
+
+.modal-wrapper {
+	@include layer(fixed, 0, 0, 0, 0);
+	z-index: 9999;
+	background-color: rgba(0, 4, 14, 0.8);
+	transition: all 0.35s;
+	opacity: 0;
+	&.active {
+		opacity: 1;
+	}
+	.bt-close {
+		width: 40px;
+		height: 40px;
+		background-color: $colorRed;
+		color: #fff;
+		text-align: center;
+		line-height: 40px;
+		font-size: $lg;
+		cursor: pointer;
+		@include layer(absolute, 0, 0, auto, auto)
 	}
 }
