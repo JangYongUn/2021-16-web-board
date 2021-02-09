@@ -62,10 +62,9 @@
 }
 
 .modal-wrapper {
-	transition: all 0.35s;
-	transform: translateX();
 	@include layer(fixed, 0, 0, 0, 0);
 	@include flex($CT, $CT);
+	overflow: hidden;
 	z-index: 9999;
 	background-color: rgba(0, 4, 14, 0.8);
 	transition: all 0.35s;
@@ -86,28 +85,31 @@
 	}
 	.info-wrapper {
 		transition: all 0.35s;
-		transform: translateX(calc(-100%, -30px);
+		transform: translateX(calc(-100% - 30px));
 		background-color: #fff;
 		width: 30%;
 		height: 100vh;
-		overflow-y: scroll;
+		overflow-y: auto;
 		min-width: 300px;
 		@include layer(absolute, 0, auto, 0, 0);
 		@include shadow(12px, 0, 12px, 0.5);
 		z-index: 9999;
 		padding: 0 1.5em;
-		.lists{
+		&.active {
+			transform: translateX(0);
+		}
+		.lists {
 			margin-top: 80px;
-			.list{
-				border-bottom: 1px solid $colorLighter;
+			.list {
 				margin-bottom: 1.5em;
+				border-bottom: 1px solid $colorLighter;
 				.title {
 					font-size: $xl;
 					color: $colorDark;
-					padding-left: 1em;
-					border-right: 3px solid $colorGreen;
+					padding-left: 0.5em;
+					border-left: 3px solid $colorGreen;
 				}
-				.conrent{
+				.content {
 					font-size: $lg;
 					color: $colorGrey;
 					padding: 1em 0 1em 1em;

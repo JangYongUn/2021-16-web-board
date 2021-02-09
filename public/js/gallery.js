@@ -89,7 +89,17 @@ function onEdit(el, e, id) {
 
 function onModalHide() {
 	$(".modal-wrapper").removeClass('active');
+	$('.info-wrapper').removeClass('active');
 	setTimeout(function(){
 		$(".modal-wrapper").css('display', 'none');
 	}, 350);
+}
+
+
+function onInfoShow() {
+	$('.info-wrapper').addClass('active');
+}
+
+function onInfoHide() {
+	$('.info-wrapper').removeClass('active');
 }

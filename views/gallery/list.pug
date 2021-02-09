@@ -30,7 +30,7 @@ block content
 		.bt-close.bt-red
 			i.fa.fa-times
 		.info-wrapper(onclick="event.stopPropagation()")
-			.bt-hide.bt-red
+			.bt-hide.bt-red(onclick="onInfoHide()")
 				i.fa.fa-arrow-left
 			ul.lists 
 				li.list
@@ -38,10 +38,10 @@ block content
 					.content 제목입니다.
 				li.list
 					.title 작성자
-					.content 장용운
+					.content 홍길동
 				li.list
 					.title 작성일
-					.content 2021-02-09 12:39:26
+					.content 2021-02-09 12:11:15
 				li.list
 					.title 내용
 					.content 내용입니다.
