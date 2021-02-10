@@ -54,7 +54,7 @@ router.get('/create', isUser, (req, res, next) => {
 router.post('/save', isUser, uploadImg.array('upfile', 10), async (req, res, next) => {
 	let sql, value, rs, r, fid;
 	sql = `INSERT INTO gallery SET title=?, content=?, writer=?, uid=?`;
-	value = [req.body.title, req.body.writer, req.body.content, req.session.user.id];
+	value = [req.body.title, req.body.content, req.body.writer, req.session.user.id];
 	rs = await pool.query(sql, value);
 	fid = rs[0].insertId;
 	if(req.files) {
@@ -65,6 +65,17 @@ router.post('/save', isUser, uploadImg.array('upfile', 10), async (req, res, nex
 		}
 	}
 	res.redirect('/gallery');
+});
+
+router.get('/api/view/:id', async (req, res, next) => {
+	try{
+		let sql, value, rs, r, r2;
+		sql = 'SELECT * FROM gallery WHERE id='+req.params.id;
+		r = await pool.query(sql);
+	}
+	catch{
+		next(err(e.message || e));
+	}
 });
 
 
