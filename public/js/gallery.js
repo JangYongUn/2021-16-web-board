@@ -1,4 +1,7 @@
+var swiperIdx = 0;
+var swiperRs;
 var swiper;
+
 
 
 function onPlus(el) {
@@ -95,6 +98,10 @@ function onInfoShow() {
 
 function onInfoHide() {
 	$('.info-wrapper').removeClass('active');
+}
+
+function onDownload() {
+	
 }
 
 function init() {

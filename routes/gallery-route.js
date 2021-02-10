@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const ip = require('request-ip');
 const { uploadImg, imgExt } = require('../modules/multer');
 const { pool, sqlMiddle: sql } = require('../modules/mysql-pool');
-const { err, alert, extName, srcPath, realPath } = require('../modules/util');
+const { err, alert, extName, srcPath, realPath, datetime } = require('../modules/util');
 const pagers = require('../modules/pager');
 const { isUser, isGuest } = require('../modules/auth');
 const router = express.Router();
@@ -42,7 +42,7 @@ router.get(['/', '/list'], async (req, res, next) => {
 			v.src[1] = srcPath(r2[0][1].savefile);
 		}
 	}
-	console.log(pager);
+	// console.log(pager);
 	res.render('gallery/list', { ...pugs, rs, pager });
 });
 
@@ -68,15 +68,26 @@ router.post('/save', isUser, uploadImg.array('upfile', 10), async (req, res, nex
 });
 
 router.get('/api/view/:id', async (req, res, next) => {
-	try{
-		let sql, value, rs, r, r2;
+	try {
+		let sql, value, rs, r, r2, src=[];
 		sql = 'SELECT * FROM gallery WHERE id='+req.params.id;
 		r = await pool.query(sql);
+		rs = r[0][0];
+		rs.created = datetime(rs.created, 2);
+		sql = 'SELECT * FROM gallery_file WHERE fid='+req.params.id;
+		r2 = await pool.query(sql);
+		rs.src = r2[0].map(v => srcPath(v.savefile));
+		res.json(rs);
 	}
-	catch{
+	catch(e) {
 		next(err(e.message || e));
 	}
 });
 
+router.get('/download', async (req, res, next) => {
+	// 숙제
+	const file = path.join(__dirname, req.query.file.replace('/storages', '../uploads'));
+	res.download(file);
+});
 
 module.exports = router;
