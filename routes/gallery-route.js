@@ -86,18 +86,18 @@ router.get('/api/view/:id', async (req, res, next) => {
 
 router.get('/download', async (req, res, next) => {
 	// 숙제
-	sql = 'SELECT FROM gallery_file WHERE orifile='+req.originalname;
-	r = await pool.query(sql);
-	rs = r[0][0];
-	/*
-		for(let v of req.files) {
-			sql = `SELECT FROM gallery_file WHERE orifile=?`;
-			value = [v.originalname];
-			await pool.query(sql, value);
-		}
-	*/
-	const file = path.join(__dirname, req.query.file.replace('/storages', '../uploads'));
-	res.download(file);
+	try {
+		let sql, value, rs, r;
+		sql = 'SELECT orifile FROM gallery_file WHERE savefile ='+req.originalname;
+		value = [savefile];
+		r = await pool.query(sql, value);
+		rs = r[0][0];
+		const file = path.join(__dirname, req.query.file.replace('/storages', '../uploads'));
+		res.download(file);
+	}
+	catch(e) {
+		next(err(e.message || e));
+	}
 });
 
 module.exports = router;
