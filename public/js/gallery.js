@@ -1,7 +1,6 @@
 var swiperIdx = 0;
-var swiperRs;
+var swiperSrc;
 var swiper;
-
 
 
 function onPlus(el) {
@@ -53,22 +52,52 @@ function onSave(f) {
 }
 
 function onModalShow(el, e, id) {
+	var html = '';
 	e.stopPropagation();
-	$.get('/gallery/api/view/'+id, function(r){
-
-	});
 	$(".modal-wrapper").css('display', 'flex');
 	$(".modal-wrapper").css('opacity');
 	$(".modal-wrapper").addClass('active');
-	if(!swiper) {
-		swiper = new Swiper('.swiper-container', {
-			loop: true,
-			pagination: {
-				el: '.swiper-pagination',
-				clickable: true
-			},
+	$('.modal-wrapper .loader').show();
+	$('.modal-wrapper .modal-wrap').removeClass('active');
+	$.get('/gallery/api/view/'+id, function(r){
+		swiperSrc = r.src;
+		console.log(r);
+		for(var i in r.src) {
+			html += '<div class="swiper-slide">';
+			html += '<img class="mw-100" src="'+r.src[i]+'" alt="image">';
+			html += '</div>';
+		}
+		$('.modal-wrapper .swiper-wrapper').html(html);
+		$('.modal-wrapper .info-wrapper .content').eq(0).html(r.title);
+		$('.modal-wrapper .info-wrapper .content').eq(1).html(r.writer);
+		$('.modal-wrapper .info-wrapper .content').eq(2).html(r.created);
+		$('.modal-wrapper .info-wrapper .content').eq(3).html(r.content);
+		if(r.src.length == 0) {
+			$('.modal-wrapper .fa-info-circle').css('font-size', '3em');
+			$('.modal-wrapper .fa-download').hide();
+		}
+		else {
+			$('.modal-wrapper .fa-info-circle').css('font-size', '');
+			$('.modal-wrapper .fa-download').show();
+		}
+		$('.modal-wrapper .swiper-wrapper').imagesLoaded(function(){
+			$('.modal-wrapper .loader').hide();
+			$('.modal-wrapper .modal-wrap').addClass('active');
+			if(swiper) swiper.destroy();
+			swiper = new Swiper('.swiper-container', {
+				spaceBetween: 10,
+				autoHeight: true,
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true
+				},
+			});
+			swiper.on('slideChange', function() {
+				swiperIdx = swiper.realIndex;
+			});
 		});
-	}
+	});
 }
 
 function onDelete(el, e, id) {
@@ -91,7 +120,6 @@ function onModalHide() {
 	}, 350);
 }
 
-
 function onInfoShow() {
 	$('.info-wrapper').addClass('active');
 }
@@ -101,7 +129,7 @@ function onInfoHide() {
 }
 
 function onDownload() {
-	
+	location.href = '/gallery/download?file='+swiperSrc[swiperIdx];
 }
 
 function init() {
