@@ -73,8 +73,9 @@
 		opacity: 1;
 	}
 	.loader {
+		@include center(9);
 		color: $colorLighter;
-		font-size: $xl;
+		font-size: 3em;
 	}
 	.bt-red {
 		width: 40px;
@@ -122,40 +123,51 @@
 		}
 	}
 	.modal-wrap {
+		opacity: 0;
+		transition: all 0.35s;
 		width: auto;
 		max-width: 70%;
+		&.active {
+			opacity: 1;
+		}
 		.swiper-container {
-			padding-bottom: 7em;
+			padding-bottom: 1em;
 			.swiper-wrapper {
 				.swiper-slide {
+					@include flex($CT, $CT);
 					text-align: center;
+					height: 60vh;
+					overflow: hidden;
 				}
 			}
-			.bts {
-				@include layer(absolute, auto, 0, 4em, 0);
-				@include flex($CT, $CT);
-				color: $colorLight;
-				font-size: $xl;
-				.fa {
-					margin: 0 0.25em;
-					cursor: pointer;
-					transition: all 0.3s;
-					&:hover {
-						color: $pagerActive;
-					}
+		}
+		.bts {
+			@include flex($CT, $CT);
+			color: $colorLight;
+			font-size: $xl;
+			.fa {
+				margin: 0 0.25em;
+				cursor: pointer;
+				transition: color 0.3s;
+				&:hover {
+					color: $pagerActive;
 				}
 			}
-			.swiper-pagination {
-				.swiper-pagination-bullet {
-					width: 12px;
-					height: 12px;
-					background: #fff;
-					opacity: .3;
-				}
-				.swiper-pagination-bullet-active {
-					opacity: 1;
-					background: $colorRed;
-				}
+		}
+		.swiper-pagination {
+			margin-top: 2em;
+			position: static;
+			text-align: center;
+			.swiper-pagination-bullet {
+				width: 12px;
+				height: 12px;
+				background: #fff;
+				opacity: .3;
+				margin: 3px;
+			}
+			.swiper-pagination-bullet-active {
+				opacity: 1;
+				background: $colorRed;
 			}
 		}
 	}
