@@ -24,7 +24,11 @@ router.get('/api/remove/:id', isUser, async (req, res, next) => {
 		WHERE gallery_file.id=? AND gallery.uid=?`;
 		value = [req.params.id, req.session.user.id];
 		r = await pool.query(sql, value);
-		res.json(r[0]);
+		if(r[0][0]) {
+			await fs.remove(realPath(r[0][0].savefile));
+			sql = 'DELETE FROM '
+			
+		}
 	}
 	catch(e) {
 		res.status(500).json(e);

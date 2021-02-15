@@ -2,10 +2,11 @@ var swiperIdx = 0;
 var swiperSrc;
 var swiper;
 
+
 function onApiRemove(id) {
 	if(confirm('첨부파일을 삭제하시겠습니까?')) {
 		$.get('/gallery/api/remove/'+id, function(r){
-			console.log(r);
+			if()
 		});
 	}
 }
