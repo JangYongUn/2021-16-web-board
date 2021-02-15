@@ -17,8 +17,13 @@ const pugs = {
 	headerTitle: 'Node/Express를 활용한 갤러리' 
 }
 
-router.get('/edit/:id', isUser, (req, res, next) => {
-	
+router.get('/edit/:id', isUser, async (req, res, next) => {
+	try {
+		let sql, value, r, rs;
+	}
+	catch {
+
+	}
 	res.render('gallery/create', pugs);
 });
 
