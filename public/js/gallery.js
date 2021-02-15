@@ -2,6 +2,43 @@ var swiperIdx = 0;
 var swiperSrc;
 var swiper;
 
+function onApiRemove(id) {
+	if(confirm('첨부파일을 삭제하시겠습니까?')) {
+		$.get('/gallery/api/remove/'+id, function(r){
+			console.log(r);
+		});
+	}
+}
+
+function onChgPlus(el) {
+	if($(".list-file-wrap > .list-wrap").length < 10) {
+		var html = '';
+		html += '<div class="list-wrap file-wrapper">'; 
+		html += '<div class="title">첨부이미지</div>';
+		html += '<div class="file-wrap">';
+		html += '<div class="list">';
+		html += '<input class="form-control-file" type="file" name="upfile">';
+		html += '</div>';
+		html += '<div class="bts">';
+		html += '<span class="bt-minus mr-2" onclick="onChgMinus(this);">';
+		html += '<i class="fa fa-minus-circle text-danger"></i>';
+		html += '</span>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		$(".list-file-wrap").append(html);
+	}
+	if($(".list-file-wrap > .list-wrap").length >= 10) {
+		console.log($(".list-file-wrap > .bts"));
+		$(".list-file-wrap > .bts").hide();
+	}
+}
+
+function onChgMinus(el) {
+	console.log($(el).parents('.list-wrap'));
+	$(el).parents('.list-wrap').remove();
+	$(".list-file-wrap > .bts").show();
+}
 
 function onPlus(el) {
 	if($(".file-wrapper .file-wrap").length < 9) {
