@@ -17,14 +17,22 @@ const pugs = {
 	headerTitle: 'Node/Express를 활용한 갤러리' 
 }
 
-router.get('/edit/:id', isUser, async (req, res, next) => {
+router.get('/change/:id', isUser, async (req, res, next) => {
 	try {
-		let sql, value, r, rs;
+		//sql = `SELECT gallery.*, gallery_file.id as file_id FROM gallery LEFT JOIN gallery_file ON gallery.id = gallery_file.fid WHERE gallery.id = ${req.params.id}`;
+		sql = 'SELECT * FROM gallery WHERE id='+req.params.id;
+		r = await pool.query(sql);
+		rs = r[0][0];
+		sql = 'SELECT * FROM gallery_file WHERE fid='+req.params.id;
+		r = await pool.query(sql);
+		rs.files = r[0];
+		for(let v of r[0]) v.src = srcPath(v.savefile);
+
+		res.render('gallery/create', pugs);
 	}
 	catch {
-
+		next(err(e.message || e));
 	}
-	res.render('gallery/create', pugs);
 });
 
 
