@@ -26,7 +26,7 @@ block content
 									.legacy
 											img.thumb.mr-2(src=`${v.src}` alt=`${v.orifile}`)
 											span= v.orifile
-											span.ml-2(onclick=`onApiRemove(${v.id});`)
+											span.ml-2(onclick=`onApiRemove(this, ${v.id});`)
 												i.fa.fa-times.text-danger.xl
 									.list.pt-2.pb-3
 										input.form-control-file(type="file" name="upfile")
