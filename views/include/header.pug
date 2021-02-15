@@ -26,32 +26,3 @@ header
 			a(href="/api") API BOARD
 		li.sub
 			a(href="/gallery") GALLERY
-			
-header
-	.top-wrapper
-		.wrapper
-			if user.id
-				a(href="/auth/logout") LOGOUT
-			else
-				a(href="/auth/join") JOIN
-				a(href="/auth/login") LOGIN
-	.header-wrapper
-		.wrapper
-			h1.logo-wrapper
-				a(href="/") 
-					.img-wrap
-						img.w-100(src="/img/booldook.png")
-					span BOOLDOOK
-			.navi-wrapper
-				a.navi(href="/board") BOARD
-				a.navi(href="/api") API BOARD
-				a.navi(href="/gallery") GALLERY
-			.mobile-wrapper
-				i.fa.fa-bars.navi(onclick="onMobile();")
-	ul.mobile-sub
-		li.sub
-			a(href="/board") BOARD
-		li.sub
-			a(href="/api") API BOARD
-		li.sub
-			a(href="/gallery") GALLERY
