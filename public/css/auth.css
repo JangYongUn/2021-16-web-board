@@ -10,15 +10,9 @@
 
 .join-wrapper .join-wrap .list {
   padding: 0.5em 0 .25em 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .join-wrapper .join-wrap .list:not(:last-child) {
@@ -32,16 +26,13 @@
 .join-wrapper .join-wrap .list .title {
   padding: 0.25em 0;
   width: 120px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   border-right: 3px solid #2d7218;
   margin-right: 1.5em;
 }
 
 .join-wrapper .join-wrap .list .content {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .join-wrapper .join-wrap .list .content .comment {
@@ -69,22 +60,15 @@
 
 .login-wrapper .login-wrap li {
   padding: 0.5em 0 .25em 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .login-wrapper .login-wrap li .title {
   padding: 0.25em 0;
   width: 90px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   border-right: 3px solid #2d7218;
   margin-right: 1.5em;
 }
