@@ -1,6 +1,6 @@
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const option = {
+const options = {
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
 	port: process.env.DB_PORT,
@@ -13,6 +13,6 @@ module.exports = () => {
 		resave: false,
 		saveUninitialized: true,
 		cookie: { secure: false },
-		store: new MySQLStore(option)
+		store: new MySQLStore(options)
 	});
 }

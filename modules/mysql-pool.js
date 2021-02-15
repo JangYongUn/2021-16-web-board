@@ -12,6 +12,7 @@ const pool = mysql.createPool({
 
 
 
+
 /******* filed, data, file ********/
 // data = { name: '홍길동', age: 25, score: 70 }
 // sql = INSERT INTO score SET name=?, age=?, score=?

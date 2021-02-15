@@ -8,6 +8,8 @@ const session = require('./modules/session');
 const local = require('./modules/local');
 const logger = require('./modules/logger');
 
+
+
 /************* Server **************/
 app.listen(process.env.PORT, () => {
 	console.log('=====================');
@@ -50,5 +52,6 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+	console.log(err);
 	res.render('error', err);
 });
