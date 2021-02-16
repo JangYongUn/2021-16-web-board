@@ -26,6 +26,7 @@ router.post('/update', isUser, uploadImg.array('upfile'), async (req, res, next)
 			let id = _.find(delfile, {name: v.originalname}).id;
 			if(id) {
 				sql = 'SELECT savefile FROM gallery_file WHERE id='+id;
+				console.log(sql);
 				r = await pool.query(sql);
 				await fs.remove(realPath(r[0][0].savefile));
 				sql = 'DELETE FROM gallery_file WHERE id='+id;
