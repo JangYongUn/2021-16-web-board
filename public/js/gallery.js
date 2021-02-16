@@ -74,6 +74,9 @@ function onSave(f) {
 		alert("첨부파일은 1개 이상 등록하셔야 합니다.");
 		return false;
 	}
+	if($(f).) {
+
+	}
 	return true;
 }
 
