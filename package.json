@@ -4,21 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JangYongUn/2021-16-web-board.git"
+    "url": "git+https://github.com/booldook/2020-kn-web-16-board.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JangYongUn/2021-16-web-board/issues"
+    "url": "https://github.com/booldook/2020-kn-web-16-board/issues"
   },
-  "homepage": "https://github.com/JangYongUn/2021-16-web-board#readme",
+  "homepage": "https://github.com/booldook/2020-kn-web-16-board#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-mysql-session": "^2.1.5",
